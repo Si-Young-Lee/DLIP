@@ -101,3 +101,36 @@ int ddepth = CV_16S;
 Laplacian(src, dst, ddepth, kernel_size, scale, delta, BORDER_DEFAULT);
 ```
 
+### Filter2D
+```
+void filter2D(src, dst, ddepth, kernel_size, Anchor Point, delta, border_type);
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
+
+* **Kernel_size**:  Size of Kernel Matrix(It should be odd)
+
+* **Anchor Point**: Reference point or reference position of an object
+
+* **delta**:  delta is the value to be added to the Laplacian operation result. The default is set to 0, and delta is mainly used to adjust the brightness or contrast of the output.
+
+* **border_type**: Parameters that define how pixels are processed at image boundaries.
+
+**Example code**
+```c++
+Mat kernel;
+delta = 0;
+ddepth = -1;
+kernel_size = 5;
+Point anchor = Point(-1, -1);
+	
+kernel = Mat::ones(5, 5, CV_32F);
+//kernel = kernel / 25.0f; 
+
+
+filter2D(src, dst, -1, kernel, anchor, 0, BORDER_DEFAULT);
+```
