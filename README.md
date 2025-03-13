@@ -8,7 +8,9 @@ Program: C++
 
 IDE/Compiler: Visual Studio 2019
 
-### Spatial Filter
+
+## Spatial Filter
+### Blur
 ```
 void blur(src, dst, Kernel_Size, Anchor point);
 ```
@@ -29,7 +31,7 @@ blur(src, dst, Size(i, i), Point(-1, -1));
 namedWindow("Blur", WINDOW_AUTOSIZE);
 imshow("Blur", dst);
 ```
-
+### GausianBlur
 ```
 void GaussianBlur(src, dst, Kernel_Size, X, Y);
 ```
@@ -51,6 +53,27 @@ namedWindow("Gaussian", WINDOW_AUTOSIZE);
 imshow("Gaussian", dst);
 ```
 
+### Medianblur
+```
+void medianBlur(src, dst, kernel_size);
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
+
+* **Kernel_size**:  Size of Kernel Matrix(It should be odd)
+
+**Example code**
+```c++
+medianBlur(src, dst, 3);
+namedWindow("Median", WINDOW_AUTOSIZE);
+imshow("Median", dst);
+```
+
+### Laplacian
 ```
 void Laplacian(src, dst, ddepth, kernel_size, scale, delta, border_type);
 ```
