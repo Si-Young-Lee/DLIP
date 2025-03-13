@@ -8,4 +8,13 @@ Program: C++
 
 IDE/Compiler: Visual Studio 2019
 
-## Spatial Filter
+### Spatial Filter
+'''
+void blur(src, dst, Kernel_Size, Anchor point);
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
