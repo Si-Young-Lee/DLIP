@@ -327,39 +327,44 @@ int main(int argc, char** argv)
 ```
 ### adaptiveThreshold
 ```
-calcHist(&src, Num_channel, index_channel, Mat(), b_hist, dimension, &histSize, &histRange, uniform, accumulate);
+void cv::adaptiveThreshold(InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blockSize, double C)
 ```
 
 **Parameters**
 
-* **src**:  input image
+* **src**:  input array
 
-* **Num_channel**:  number of channel
+* **dst**:  Output array
 
-* **index_channel**:  index of channel
+* **maxValue**:  max value of intensity
 
-* **Mat()**:  Mask image
+* **adaptiveMethod**: ADAPTIVE_THRESH_MEAN_C, ADAPTIVE_THRESH_GAUSSIAN_C
 
-* **b_hist**: Output of histogram(Mat)
+* **ADAPTIVE_THRESH_MEAN_C**: Calculates the threshold based on the average value of adjacent pixels.
 
-* **dimension**: dimension of histogram(1D, 2D...)
+* **ADAPTIVE_THRESH_GAUSSIAN_C**: ADAPTIVE_THRESH_GAUSIAN_C: Calculates the threshold based on the Gaussian weighted average of adjacent pixels.
 
-* **&histSize**: number of intervals in the histogram
+* **thresholdType**: Parameters that set the binarization method
 
-* **&histRange**: Array that sets the range of values for the histogram
+* **THRESH_BINARY**: Allocate maxValue if it is greater than the calculated threshold, and 0 if it is less
 
-* **uniform**: This value is an option to set intervals evenly when calculating histograms. When set to uniform = true, each interval is the same size. Usually set to true.
+* **blockSize**: The size of the region area for which the threshold is to be calculated. This value must be odd (for example, 3, 5, 7, 9, etc.).
 
-* **accumulate**: This value determines whether to accumulate histograms. Calculate a new histogram if accumulate = false; add results to the existing histogram if accumulate = true
+* **C**: This value is subtracted from the calculated threshold, which is used to calibrate the brightness of the image.
 
 **Example code**
 ```c++
 
 //! [Compute the histograms]
-Mat b_hist, g_hist, r_hist;
-calcHist(&bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
-calcHist(&bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
-calcHist(&bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
+void cv::adaptiveThreshold	(	
+    InputArray 	src,
+	OutputArray 	dst,
+    double 	maxValue,
+    int 	adaptiveMethod,
+    int 	thresholdType,
+    int 	blockSize,
+    double 	C 
+)	
 
 }
 ```
