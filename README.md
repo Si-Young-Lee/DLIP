@@ -4,7 +4,7 @@ Written by:   Si Young Lee
 
 Course:  DLIP
 
-Program: C++
+Program: C++d
 
 IDE/Compiler: Visual Studio 2019
 
