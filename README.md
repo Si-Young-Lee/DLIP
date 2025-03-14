@@ -4,7 +4,7 @@ Written by:   Si Young Lee
 
 Course:  DLIP
 
-Program: C++d
+Program: C++
 
 IDE/Compiler: Visual Studio 2019
 
@@ -99,6 +99,33 @@ int scale = 1;
 int delta = 0;
 int ddepth = CV_16S;
 Laplacian(src, dst, ddepth, kernel_size, scale, delta, BORDER_DEFAULT);
+```
+
+### bilateral filter
+```
+void bilateralFilter(src, dst, d, sigmacolor, sigmaspace);
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
+
+* **d**:  Diameter of each pixel neighborhood that is used during filtering. If it is non-positive, it is computed from sigmaSpace.
+
+* **sigmacolor**:  Filter sigma in the color space. A larger value of the parameter means that farther colors within the pixel neighborhood (see sigmaSpace) will be mixed together, resulting in larger areas of semi-equal color.
+
+* **sigmaspace**:  Filter sigma in the coordinate space. A larger value of the parameter means that farther pixels will influence each other as long as their colors are close enough (see sigmaColor ). When d>0, it specifies the neighborhood size regardless of sigmaSpace. Otherwise, d is proportional to sigmaSpace.
+
+* **border_type**: Parameters that define how pixels are processed at image boundaries.
+
+**Example code**
+```c++
+Mat bilateral;
+bilateralFilter(src, bilateral, 3, 6, 1.5);
+imshow("bilateral", bilateral);
+
 ```
 
 ### Filter2D
