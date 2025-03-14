@@ -151,11 +151,11 @@ void threshold(src, dst, thresh, maxval, type);
 
 * **maxval**: max value of intensity
 
-* **type**:  THRESH_BINARY: Basic binarization, converting pixels larger than threshold to maxVal and smaller pixels to zero
-THRESH_BINARY_INV: Conversion of basic binarization, converting pixels larger than threshold to zero, and pixels smaller to maxVal
-THRESH_TRUNC: Fix pixels larger than threshold and keep pixels smaller than threshold
-THRESH_TOZERO: Keep pixels larger than threshold, convert smaller pixels to zero
-THRESH_TOZERO_INV: Converts pixels larger than threshold to zero, keeps smaller pixels intact
+* **type**:  THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH_TOZERO_INV
+
+* **THRESH_BINARY**: Basic binarization, converting pixels larger than threshold to maxVal and smaller pixels to zero
+
+* **THRESH_BINARY_INV**: Conversion of basic binarization, converting pixels larger than threshold to zero, and pixels smaller to maxVal
 
 **Example code**
 ```c++
@@ -282,6 +282,85 @@ int main(int argc, char** argv)
     imshow("calcHist Demo", histImage);
     waitKey();
     //! [Display]
+
+    return EXIT_SUCCESS;
+}
+```
+
+### NORMALIZE
+```
+normalize(src, dst, min, max, norm_type, data_type, Mat());
+```
+
+**Parameters**
+
+* **src**:  input array
+
+* **dst**:  output array
+
+* **min**:  minimum value after normalized
+
+* **max**:  maximum value after normalized
+
+* **norm_type**: type of normalize
+
+* **data_type**: type of data (-1 -> no change)
+
+* **Mat()**:  Mask image
+
+**Example code**
+```c++
+
+int main(int argc, char** argv)
+{
+    //! [Load image]
+    //CommandLineParser parser(argc, argv, "{@input | coin.jpg | input image}");
+    //Mat src = imread(samples::findFile(parser.get<String>("@input")), IMREAD_COLOR);
+    Mat src = imread("C:/Users/USER/source/repos/DLIP/image/coin.jpg", IMREAD_COLOR);
+
+    if (src.empty())
+    {
+        return EXIT_FAILURE;
+    }
+    //! [Load image]
+
+    //! [Separate the image in 3 places ( B, G and R )]
+    vector<Mat> bgr_planes;
+    split(src, bgr_planes);
+    //! [Separate the image in 3 places ( B, G and R )]
+
+    //! [Establish the number of bins]
+    int histSize = 256;
+    //! [Establish the number of bins]
+
+    //! [Set the ranges ( for B,G,R) )]
+    float range[] = { 0, 256 }; //the upper boundary is exclusive
+    const float* histRange = { range };
+    //! [Set the ranges ( for B,G,R) )]
+
+    //! [Set histogram param]
+    bool uniform = true, accumulate = false;
+    //! [Set histogram param]
+
+    //! [Compute the histograms]
+    Mat b_hist, g_hist, r_hist;
+    calcHist(&bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
+    calcHist(&bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
+    calcHist(&bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
+    //! [Compute the histograms]
+
+    //! [Draw the histograms for B, G and R]
+    int hist_w = 512, hist_h = 400;
+    int bin_w = cvRound((double)hist_w / histSize);
+
+    Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));
+    //! [Draw the histograms for B, G and R]
+
+    //! [Normalize the result to ( 0, histImage.rows )]
+    normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+    normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+    normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+    //! [Normalize the result to ( 0, histImage.rows )]
 
     return EXIT_SUCCESS;
 }
