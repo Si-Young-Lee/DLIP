@@ -7,7 +7,7 @@ Course:  DLIP
 Program: C++
 
 IDE/Compiler: Visual Studio 2019
-s
+
 
 ## Spatial Filter
 ### Blur
@@ -497,19 +497,98 @@ Mat getStructuringElement(int shape, Size ksize, Point anchor);
 ```c++
 Mat src = imread("image.jpg", 0);  // 
 Mat dst;
-Mat element = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));  // 5x5 크기의 타원형 구조 요소
+Mat element = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));  
 
-// 팽창 연산
 dilate(src, dst, element);
 imshow("Dilation", dst);
 
-// 침식 연산
 erode(src, dst, element);
 imshow("Erosion", dst);
 
-// 형태학적 열기 연산 (침식 후 팽창)
 morphologyEx(src, dst, MORPH_OPEN, element);
 imshow("Opening", dst);
 
+waitKey(0);
+```
+
+### findContours
+```
+void findContours(InputOutputArray image, OutputArrayOfArrays contours, int mode, int method,  Point offset = Point());
+```
+
+**Parameters**
+
+* **image**:  input image
+  
+* **contours**:  Vector to store the found outline (in the form of std::vector<std::vector<Point>)
+
+* **mode**: mode to find the mode outline (shape analysis method)
+
+* **method**: Method Approximate contours
+
+* **Point offset**: offset of point (default = (0, 0)
+
+* **RETR_EXTERNAL**: only finds the outermost outline
+
+* **RETR_LIST**: Find all contours without hierarchical structure
+
+* **RETR_CCOMP**: Find all contours, hierarchically store outline and inner hole information
+
+* **RETR_TREE**: Maintains full layer tree and finds all contours
+
+* **CHAIN_APPROX_NONE**: Save all contour points (accurate but many data)
+
+* **CHAIN_APPROX_SIMPLE**: Reduce the points in the straight line to save (save data)
+
+* **CHAIN_APPROX_TC89_L1, CHAIN_APPROX_TC89_KCOS**: Theodor (TC89) algorithm simplifies the contour
+
+
+*mode*: RETR_EXTERNAL, RETR_LIST, RETR_CCOMP, RETR_TREE
+*method*: CHAIN_APPROX_NONE, CHAIN_APPROX_SIMPLE, CHAIN_APPROX_TC89_L1, CHAIN_APPROX_TC89_KCOS
+
+**Example code**
+```c++
+vector<vector<Point>> contours;
+findContours(img, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+```
+
+### drawContours
+```
+void drawContours(InputOutputArray image, InputArrayOfArrays contours, int contourIdx, const Scalar& color, int thickness = 1, int lineType = 8, InputArray hierarchy = noArray(), int maxLevel = INT_MAX, Point offset = Point());
+```
+
+**Parameters**
+
+* **image**:  input image
+  
+* **contours**:  coutours data (in the form of std::vector<std::vector<Point>)
+
+* **contourIdx**: contour index to draw(all for -1)
+
+* **color**: color of line
+
+* **thickness**: thickness of line 
+
+* **LineType**: Line Style (LINE_8, LINE_4, LINE_AA)
+
+* **hierarchy**: contour hierarchy information (usually disabled)
+
+* **maxLevel**: Specify up to what level of layer to draw (default INT_MAX)
+
+* **Point offset**: offset of point (default = (0, 0)
+
+
+
+**Example code**
+```c++
+Mat img = Mat::zeros(400, 400, CV_8UC3);
+vector<vector<Point>> contours;
+vector<Vec4i> hierarchy;
+
+contours.push_back({Point(100,100), Point(200,100), Point(200,200), Point(100,200)});
+
+drawContours(img, contours, -1, Scalar(255, 0, 0), 2);  //blue contours
+
+imshow("Contours", img);
 waitKey(0);
 ```
