@@ -7,7 +7,7 @@ Course:  DLIP
 Program: C++
 
 IDE/Compiler: Visual Studio 2019
-
+s
 
 ## Spatial Filter
 ### Blur
