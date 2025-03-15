@@ -184,6 +184,12 @@ void threshold(src, dst, thresh, maxval, type);
 
 * **THRESH_BINARY_INV**: Conversion of basic binarization, converting pixels larger than threshold to zero, and pixels smaller to maxVal
 
+* **THRESH_TRUNC**: Hold pixels larger than threshold, and keep pixels smaller than threshold
+
+* **THRESH_TOZERO**: Keep pixels larger than threshold and convert smaller pixels to zero
+
+* **THRESH_TOZERO_INV**: Converts pixels larger than threshold to zero, and keeps smaller pixels intact
+
 **Example code**
 ```c++
 
@@ -354,7 +360,6 @@ void cv::adaptiveThreshold(InputArray src, OutputArray dst, double maxValue, int
 
 **Example code**
 ```c++
-
 //! [Compute the histograms]
 void cv::adaptiveThreshold	(	
     InputArray 	src,
@@ -366,5 +371,145 @@ void cv::adaptiveThreshold	(
     double 	C 
 )	
 
-}
+```
+
+### morphologyEx
+```
+void morphologyEx(src, dst, op, kernel, anchor, iteration, bordertype, bordervalue)
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
+
+* **op**:  Type of operation(MORPH_OPEN, MORPH_CLOSE, MORPH_GRADIENT)
+
+* **kernel**: Structural elements
+
+* **anchor**: Anchor point
+
+* **iteration**: Number of iterations
+
+* **bordertype**: type of border
+
+* **borderValue**: value of border
+
+
+**Example code**
+```c++
+Mat src = imread("image.jpg", 0);  // grayscale
+Mat dst;
+Mat element = getStructuringElement(MORPH_RECT, Size(5, 5));  // Structural elements (5x5)
+
+morphologyEx(src, dst, MORPH_OPEN, element);  //opening operation
+imshow("Morphology Open", dst);
+waitKey(0);	
+
+```
+
+### erode
+```
+void erode(src, dst, kernel, anchor, iteration, bordertype, bordervalue)
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
+
+* **kernel**: Structural elements
+
+* **anchor**: Anchor point
+
+* **iteration**: Number of iterations
+
+* **bordertype**: type of border
+
+* **borderValue**: value of border
+
+
+**Example code**
+```c++
+at src = imread("image.jpg", 0);  
+Mat dst;
+Mat element = getStructuringElement(MORPH_RECT, Size(5, 5));  
+
+erode(src, dst, element);  
+imshow("Erosion", dst);
+waitKey(0);
+
+```
+
+### dilate
+```
+void dilate(src, dst, kernel, anchor, iteration, bordertype, bordervalue)
+```
+
+**Parameters**
+
+* **src**:  input image
+
+* **dst**:  Output image
+
+* **kernel**: Structural elements
+
+* **anchor**: Anchor point
+
+* **iteration**: Number of iterations
+
+* **bordertype**: type of border
+
+* **borderValue**: value of border
+
+
+**Example code**
+```c++
+at src = imread("image.jpg", 0);  
+Mat dst;
+Mat element = getStructuringElement(MORPH_RECT, Size(5, 5));  
+
+dilate(src, dst, element);  
+imshow("Erosion", dst);
+waitKey(0);
+
+```
+
+### dilate
+```
+Mat getStructuringElement(int shape, Size ksize, Point anchor);
+```
+
+**Parameters**
+
+* **shape**:  Form of structural elements (MORPH_RECT, MORPH_CROSS, MORPH_ELLIPSE, etc.)
+  
+* **ksize**:  Size of structural elements
+
+
+* **anchor**: Anchor point
+
+
+
+**Example code**
+```c++
+Mat src = imread("image.jpg", 0);  // 
+Mat dst;
+Mat element = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));  // 5x5 크기의 타원형 구조 요소
+
+// 팽창 연산
+dilate(src, dst, element);
+imshow("Dilation", dst);
+
+// 침식 연산
+erode(src, dst, element);
+imshow("Erosion", dst);
+
+// 형태학적 열기 연산 (침식 후 팽창)
+morphologyEx(src, dst, MORPH_OPEN, element);
+imshow("Opening", dst);
+
+waitKey(0);
 ```
