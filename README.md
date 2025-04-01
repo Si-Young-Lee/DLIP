@@ -677,6 +677,7 @@ for (size_t i = 0; i < lines.size(); i++)
 ### HoughLinesP
 ```
 void HoughLinesP(InputArray image, OutputArray lines, double rho, double theta, int threshold, double minLineLength=0, double maxLineGap=0 )
+```
 
 **Parameters**
 
@@ -693,7 +694,7 @@ void HoughLinesP(InputArray image, OutputArray lines, double rho, double theta, 
 * **maxLineGap**: Maximum allowable spacing between line fragments (greater than this, considered another line)
 
 
-**Example code**
+**Exmaple Code**
 ```c++
 
 
@@ -713,6 +714,7 @@ for (size_t i = 0; i < linesP.size(); i++)
 ### HoughCircles
 ```
 void HoughCircles(InputArray image, OutputArray circles, int method, double dp, double minDist, double param1 = 100, double param2 = 100, int minRadius = 0, int maxRadius = 0);)
+```
 
 **Parameters**
 
