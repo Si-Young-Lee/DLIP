@@ -709,3 +709,78 @@ for (size_t i = 0; i < linesP.size(); i++)
 }
 
 ```
+
+### HoughCircles
+```
+void HoughCircles(InputArray image, OutputArray circles, int method, double dp, double minDist, double param1 = 100, double param2 = 100, int minRadius = 0, int maxRadius = 0);)
+
+**Parameters**
+
+* **image**:  Input image
+  
+* **circles**:  Output circles
+
+* **method**: Huff conversion method (currently HOUGH_GRADIENT only available)
+
+* **dp**: Resolution Ratio (usually 1.0 or 1.5 used)
+
+* **minDist**: Minimum distance between detected circle centers
+
+* **param1**: High threshold for Canny Edge detector
+
+* **param2**: Threshold of Huff Transformation for Circle Detection
+
+* **minRadius**: Minimum circle radius to detect
+
+* **maxRadius**: Maximum circle radius to detect
+
+
+**Example code**
+```c++
+#include <opencv2/opencv.hpp>
+using namespace cv;
+using namespace std;
+
+int main(int argc, char** argv)
+{
+	Mat src, gray;
+	
+	String filename = "pillsetc.png";
+	
+	/* Read the image */
+	src = imread(filename, 1);
+	
+	if (!src.data)
+	{
+		printf(" Error opening image\n");
+		return -1;
+	}
+		
+	cvtColor(src, gray, COLOR_BGR2GRAY);
+
+	/* smooth it, otherwise a lot of false circles may be detected */
+	GaussianBlur(gray, gray, Size(9, 9), 2, 2);
+
+	vector<Vec3f> circles;
+	HoughCircles(gray, circles, 3, 2, gray.rows / 4, 200, 100);
+	for (size_t i = 0; i < circles.size(); i++)
+	{
+		Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+		int radius = cvRound(circles[i][2]);
+
+		/* draw the circle center */
+		circle(src, center, 3, Scalar(0, 255, 0), -1, 8, 0);
+
+		/* draw the circle outline */
+		circle(src, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+	}
+
+	namedWindow("circles", 1);
+	imshow("circles", src);
+	
+	/* Wait and Exit */
+	waitKey();
+	return 0;
+}
+
+```
