@@ -592,3 +592,41 @@ drawContours(img, contours, -1, Scalar(255, 0, 0), 2);  //blue contours
 imshow("Contours", img);
 waitKey(0);
 ```
+
+## Edge detection
+
+### Canny
+```
+void Canny(InputArray image, OutputArray edges, double threshold1, double threshold2, int apertureSize=3, bool L2gradient=false )
+```
+
+**Parameters**
+
+* **image**:  single-channel 8-bit input image.
+  
+* **edges**:  output edge map; it has the same size and type as image .
+
+* **threshold1**: first threshold for the hysteresis procedure.
+
+* **threshold2**: second threshold for the hysteresis procedure.
+
+* **apertureSize**: aperture size for the Sobel() operator. 
+
+* **L2gradient**: a flag, indicating whether a more accurate  L2 norm   should be used to calculate the image gradient magnitude ( L2gradient=true ), or whether the default L1 norm  is enough ( L2gradient=false ).Line Style (LINE_8, LINE_4, LINE_AA)
+
+
+**Example code**
+```c++
+Mat src, src_gray;
+Mat dst, detected_edges;
+ 
+int edgeThresh = 1;
+int lowThreshold;
+int const max_lowThreshold = 100;
+int ratio = 3;  // a ratio of lower:upper
+int kernel_size = 3; //Sobel Operation
+String window_name = "Edge Map";
+
+Canny( detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size );
+
+```
