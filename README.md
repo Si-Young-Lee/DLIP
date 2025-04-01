@@ -672,6 +672,31 @@ for (size_t i = 0; i < lines.size(); i++)
 	line(cdst, pt1, pt2, Scalar(0, 0, 255), 3, LINE_AA);
 }
 
+```
+
+### HoughLinesP
+```
+void HoughLinesP(InputArray image, OutputArray lines, double rho, double theta, int threshold, double minLineLength=0, double maxLineGap=0 )
+
+**Parameters**
+
+* **image**:  Input image
+  
+* **lineP**:  Output lines
+
+* **rho, theta**: HoughLines return polar coordinates (rho, theta)
+
+* **threshold**: Thresholding value
+
+* **minLineLength**: Minimum straight length to be detected (shorter lines are ignored)
+
+* **maxLineGap**: Maximum allowable spacing between line fragments (greater than this, considered another line)
+
+
+**Example code**
+```c++
+
+
 // (Option 2) Probabilistic Line Transform
 vector<Vec4i> linesP;
 HoughLinesP(dst, linesP, 1, CV_PI / 180, 50, 50, 10);
