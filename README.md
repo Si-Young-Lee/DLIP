@@ -786,3 +786,118 @@ int main(int argc, char** argv)
 }
 
 ```
+
+### setMouseCallback
+```
+void setMouseCallback(const string& winname, MouseCallback onMouse, void* userdata = 0);
+```
+
+**Parameters**
+
+* **winname**: Name of Window
+  
+* **onMouse**:  Callback function to run when an onMouse mouse event occurs
+
+* **userdata**: Additional data to be passed to the userdata callback function (usually nullptr or zero)
+
+
+**Example code**
+```c++
+namedWindow("Source", 0);
+setMouseCallback("Source", onMouse, 0);
+
+```
+
+### CreateTrackbar
+```
+int createTrackbar(const string& trackbarname, const string& winname, int* value, int count, TrackbarCallback onChange = 0, void* userdata = 0);
+```
+
+**Parameters**
+
+* **trackbarname**: trackbar name (slider name)
+  
+* **winname**:  Name of Window
+
+* **value**: value Pointer of linked variable (variable to be adjusted by slider)
+
+* **count**:  maximum value of count slider
+
+* **TrackbarCallback onChange**:  (Optional) Callback function to call when slider values change
+  
+* **userdata**:  (Optional) User data to pass to the callback function
+
+
+
+**Example code**
+```c++
+createTrackbar("Hmin", "Source", &hmin, 179, 0);
+
+```
+
+### inRange
+```
+void inRange(InputArray src, InputArray lowerb, InputArray upperb, OutputArray dst);
+```
+
+**Parameters**
+
+* **src**: Input image
+  
+* **lowerb**:  minimum value (Scalar, i.e. BGR or HSV value)
+
+* **upperb**: maximum value (Scalar)
+
+* **dst**:  output mask image (consisting of black and white, 0 or 255)
+
+
+**Example code**
+```c++
+inRange(hsv, Scalar(MIN(hmin, hmax), MIN(smin, smax), MIN(vmin, vmax)),
+        Scalar(MAX(hmin, hmax), MAX(smin, smax), MAX(vmin, vmax)), dst);
+
+```
+
+### inRange
+```
+void inRange(InputArray src, InputArray lowerb, InputArray upperb, OutputArray dst);
+```
+
+**Parameters**
+
+* **src**: Input image
+  
+* **lowerb**:  minimum value (Scalar, i.e. BGR or HSV value)
+
+* **upperb**: maximum value (Scalar)
+
+* **dst**:  output mask image (consisting of black and white, 0 or 255)
+
+
+**Example code**
+```c++
+inRange(hsv, Scalar(MIN(hmin, hmax), MIN(smin, smax), MIN(vmin, vmax)),
+        Scalar(MAX(hmin, hmax), MAX(smin, smax), MAX(vmin, vmax)), dst);
+
+```
+
+### setTrackbarPos
+```
+void setTrackbarPos(const String& trackbarname, const String& winname, int pos);
+```
+
+**Parameters**
+
+* **trackbarname**: trackbar name (slider name)
+  
+* **winname**:  Name of Window
+
+* **pos**: Value to set on pos trackbar (within the range of 0 to max)
+
+
+**Example code**
+```c++
+setTrackbarPos("Hmin", "Source", hmin);
+setTrackbarPos("Hmax", "Source", hmax);
+
+```
