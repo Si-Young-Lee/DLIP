@@ -477,7 +477,7 @@ waitKey(0);
 
 ```
 
-### dilate
+### getStructuringElement
 ```
 Mat getStructuringElement(int shape, Size ksize, Point anchor);
 ```
