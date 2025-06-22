@@ -1,33 +1,33 @@
 import os
 import shutil
 
-# 원본 데이터셋 폴더 리스트
+# original folder list
 dataset_dirs = [
     "C:/Users/USER/source/repos/DLIP/LAB/DLIP_Final_Project/datasets/Gloves_data",
     "C:/Users/USER/source/repos/DLIP/LAB/DLIP_Final_Project/datasets/mask_data",
     "C:/Users/USER/source/repos/DLIP/LAB/DLIP_Final_Project/datasets/mix"
 ]
 
-# 병합 대상 경로
+# merge directory
 merged_root = "C:/Users/USER/source/repos/DLIP/LAB/DLIP_Final_Project/datasets/merged"
 
-# split 목록
+# split 
 splits = ['train', 'valid', 'test']
 
-# 병합 폴더 생성 (images/split, labels/split)
+# Make Merge folder (images/split, labels/split)
 for split in splits:
     os.makedirs(os.path.join(merged_root, 'images', split), exist_ok=True)
     os.makedirs(os.path.join(merged_root, 'labels', split), exist_ok=True)
 
-# split별 병합 수행
+# Merging
 for split in splits:
-    img_idx = 0  # 파일 이름 중복 방지를 위한 번호
+    img_idx = 0  
     for dataset in dataset_dirs:
         img_dir = os.path.join(dataset, split, "images")
         lbl_dir = os.path.join(dataset, split, "labels")
 
         if not os.path.exists(img_dir):
-            continue  # 없는 경우 생략
+            continue  
 
         for fname in os.listdir(img_dir):
             name, ext = os.path.splitext(fname)
@@ -41,7 +41,7 @@ for split in splits:
             shutil.copyfile(src_lbl, dst_lbl)
             img_idx += 1
 
-    print(f"[{split}] 병합 완료 → 총 {img_idx}개 이미지 복사됨")
+    print(f"[{split}] merging Complete →  {img_idx} images")
 
-print("\n✅ 모든 train/valid/test 병합 완료! data.yaml 그대로 사용 가능")
+print("\n✅ All train/valid/test merging Complete! data.yaml")
 
