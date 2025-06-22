@@ -1,0 +1,17 @@
+train: ../datasets/mix2/train/images
+val: ../datasets/mix2/valid/images
+test: ../datasets/mix2/test/images
+
+nc: 4
+names:
+  0: gloves
+  1: mask
+  2: coat
+  3: person
+
+roboflow:
+  workspace: ss-ojmvk
+  project: crop_testset_0-vxafq
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/ss-ojmvk/crop_testset_0-vxafq/dataset/1
